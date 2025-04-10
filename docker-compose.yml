@@ -1,0 +1,28 @@
+services:
+  postgres:
+    container_name: postgres
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: "trust"
+      POSTGRES_DB: ${POSTGRESQL_DATABASE}
+    networks:
+      - network
+    env_file:
+      - .env
+  forum-service:
+    container_name: forum-service
+    image: docker.io/library/forum-service:1.0.0
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+    networks:
+      - network
+    env_file:
+      - .env
+
+networks:
+  network:
+    name: forum-network

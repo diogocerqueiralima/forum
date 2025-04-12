@@ -1,8 +1,12 @@
 package com.github.diogocerqueiralima.forumservice.models;
 
+import com.github.diogocerqueiralima.forumservice.dto.TopicDto;
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.Instant;
 import java.util.Date;
+import java.util.UUID;
 
 @Entity
 @Table(name = "topics")
@@ -16,18 +20,24 @@ public class Topic {
     private String title;
 
     @Column(nullable = false)
-    private Date createdAt;
+    private String content;
+
+    @CreationTimestamp
+    private Instant createdAt;
 
     @Column(nullable = false)
-    private Long userId;
+    private UUID userId;
 
     public Topic() {}
 
-    public Topic(String title, long userId) {
-        this.id = 0L;
-        this.createdAt = new Date();
+    public Topic(String title, String content, UUID userId) {
+        this.content = content;
         this.title = title;
         this.userId = userId;
+    }
+
+    public TopicDto toDto() {
+        return new TopicDto(this.id, this.title, this.content, this.createdAt);
     }
 
 }

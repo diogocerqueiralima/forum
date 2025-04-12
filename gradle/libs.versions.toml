@@ -9,6 +9,7 @@ spring-boot-test = { module = "org.springframework.boot:spring-boot-starter-test
 spring-boot-web = { module = "org.springframework.boot:spring-boot-starter-web" }
 spring-boot-data-jpa = { module = "org.springframework.boot:spring-boot-starter-data-jpa" }
 spring-boot-oauth2-resource-server = { module = "org.springframework.boot:spring-boot-starter-oauth2-resource-server" }
+spring-boot-validation = { module = "org.springframework.boot:spring-boot-starter-validation" }
 spring-boot-webflux = { module = "org.springframework.boot:spring-boot-starter-webflux" }
 spring-cloud-gateway = { module = "org.springframework.cloud:spring-cloud-starter-gateway" }
 postgresql = { module = "org.postgresql:postgresql", version.ref = "postgresql" }

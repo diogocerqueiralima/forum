@@ -11,13 +11,22 @@ services:
       - network
     env_file:
       - .env
+  keycloak:
+    container_name: keycloak
+    image: quay.io/keycloak/keycloak:26.2.0
+    ports:
+      - "8080:8080"
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: ${KC_BOOTSTRAP_ADMIN_USERNAME}
+      KC_BOOTSTRAP_ADMIN_PASSWORD: ${KC_BOOTSTRAP_ADMIN_PASSWORD}
+    command: ["start-dev"]
   forum-service:
     container_name: forum-service
     image: docker.io/library/forum-service:1.0.0
     depends_on:
       - postgres
     ports:
-      - "8080:8080"
+      - "9090:8080"
     networks:
       - network
     env_file:

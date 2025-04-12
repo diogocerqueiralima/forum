@@ -15,6 +15,7 @@ dependencies {
     implementation(libs.spring.boot)
     implementation(libs.spring.boot.web)
     implementation(libs.spring.data.jpa)
+    implementation(libs.spring.oauth2.resource.server)
     implementation(libs.postgresql)
     testImplementation(libs.spring.boot.test)
 }

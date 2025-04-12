@@ -27,12 +27,19 @@ services:
     image: docker.io/library/forum-service:1.0.0
     depends_on:
       - postgres
-    ports:
-      - "9090:8080"
     networks:
       - network
     env_file:
       - .env
+  gateway:
+    container_name: gateway
+    image: docker.io/library/gateway:1.0.0
+    ports:
+      - "9090:8080"
+    depends_on:
+      - forum-service
+    networks:
+      - network
 
 networks:
   network:

@@ -25,6 +25,7 @@ public class Topic {
 
     public Topic(String title, long userId) {
         this.id = 0L;
+        this.createdAt = new Date();
         this.title = title;
         this.userId = userId;
     }

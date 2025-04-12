@@ -7,17 +7,22 @@ plugins {
 group = "com.github.diogocerqueiralima"
 version = "1.0.0"
 
+extra["springCloudVersion"] = "2024.0.0"
+
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    implementation(libs.spring.boot)
-    implementation(libs.spring.boot.web)
-    implementation(libs.spring.boot.data.jpa)
-    implementation(libs.spring.boot.oauth2.resource.server)
-    implementation(libs.postgresql)
+    implementation(libs.spring.boot.webflux)
+    implementation(libs.spring.cloud.gateway)
     testImplementation(libs.spring.boot.test)
+}
+
+dependencyManagement {
+    imports {
+        mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
+    }
 }
 
 tasks.test {

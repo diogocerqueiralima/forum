@@ -17,7 +17,7 @@ public class GatewayApplication {
     public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
         return builder.routes()
                 .route("forum-service",
-                        r -> r.path("/api/v1/topics")
+                        r -> r.path("/api/v1/topics/**")
                                 .uri("http://forum-service:8080")
                 )
                 .build();

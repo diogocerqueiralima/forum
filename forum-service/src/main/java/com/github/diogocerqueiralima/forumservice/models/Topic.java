@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.Instant;
-import java.util.Date;
 import java.util.UUID;
 
 @Entity
@@ -22,6 +21,9 @@ public class Topic {
     @Column(nullable = false)
     private String content;
 
+    @Column(nullable = false)
+    private Boolean edited;
+
     @CreationTimestamp
     private Instant createdAt;
 
@@ -31,13 +33,35 @@ public class Topic {
     public Topic() {}
 
     public Topic(String title, String content, UUID userId) {
-        this.content = content;
+        this(null, title, content, false, userId);
+    }
+
+    public Topic(Long id, String title, String content, boolean edited, UUID userId) {
+        this.id = id;
         this.title = title;
+        this.content = content;
+        this.edited = edited;
         this.userId = userId;
     }
 
     public TopicDto toDto() {
-        return new TopicDto(this.id, this.title, this.content, this.createdAt);
+        return new TopicDto(this.id, this.title, this.content, this.edited, this.createdAt);
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public UUID getUserId() {
+        return userId;
     }
 
 }

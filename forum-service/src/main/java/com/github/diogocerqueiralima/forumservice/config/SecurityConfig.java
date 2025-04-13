@@ -17,7 +17,7 @@ public class SecurityConfig {
 
         return http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.GET, "/api/v1/topics").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/topics/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))

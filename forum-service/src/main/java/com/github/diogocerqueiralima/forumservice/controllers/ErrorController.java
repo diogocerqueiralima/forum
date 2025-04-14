@@ -1,6 +1,7 @@
 package com.github.diogocerqueiralima.forumservice.controllers;
 
 import com.github.diogocerqueiralima.forumservice.dto.ApiResponseDto;
+import com.github.diogocerqueiralima.forumservice.exceptions.InvalidPageException;
 import com.github.diogocerqueiralima.forumservice.exceptions.TopicNotFoundException;
 import com.github.diogocerqueiralima.forumservice.exceptions.TopicOwnerException;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,13 @@ public class ErrorController {
     }
 
     @ExceptionHandler(TopicNotFoundException.class)
+    public ResponseEntity<ApiResponseDto<Void>> handleNotFound(Exception e) {
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(new ApiResponseDto<>(e.getMessage()));
+    }
+
+    @ExceptionHandler(InvalidPageException.class)
     public ResponseEntity<ApiResponseDto<Void>> handleBadRequest(Exception e) {
         return ResponseEntity.badRequest()
                 .body(new ApiResponseDto<>(e.getMessage()));

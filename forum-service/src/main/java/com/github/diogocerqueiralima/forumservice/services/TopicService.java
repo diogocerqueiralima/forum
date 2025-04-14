@@ -1,16 +1,20 @@
 package com.github.diogocerqueiralima.forumservice.services;
 
+import com.github.diogocerqueiralima.forumservice.exceptions.InvalidPageException;
 import com.github.diogocerqueiralima.forumservice.exceptions.TopicNotFoundException;
 import com.github.diogocerqueiralima.forumservice.exceptions.TopicOwnerException;
 import com.github.diogocerqueiralima.forumservice.models.Topic;
 import com.github.diogocerqueiralima.forumservice.repositories.TopicRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.UUID;
 
 @Service
 public class TopicService {
+
+    public final static int PAGE_SIZE = 10;
 
     private final TopicRepository topicRepository;
 
@@ -53,8 +57,14 @@ public class TopicService {
         topicRepository.delete(topic);
     }
 
-    public List<Topic> getAll() {
-        return topicRepository.findAll();
+    public Page<Topic> getPage(int number) {
+
+        if (number < 1)
+            throw new InvalidPageException();
+
+        PageRequest pageRequest = PageRequest.of(number - 1, PAGE_SIZE);
+
+        return topicRepository.findAll(pageRequest);
     }
 
 }

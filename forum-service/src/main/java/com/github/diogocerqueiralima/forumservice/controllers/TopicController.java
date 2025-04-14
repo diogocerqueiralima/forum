@@ -1,19 +1,16 @@
 package com.github.diogocerqueiralima.forumservice.controllers;
 
-import com.github.diogocerqueiralima.forumservice.dto.ApiResponseDto;
-import com.github.diogocerqueiralima.forumservice.dto.CreateTopicDto;
-import com.github.diogocerqueiralima.forumservice.dto.TopicDto;
-import com.github.diogocerqueiralima.forumservice.dto.UpdateTopicDto;
+import com.github.diogocerqueiralima.forumservice.dto.*;
 import com.github.diogocerqueiralima.forumservice.models.Topic;
 import com.github.diogocerqueiralima.forumservice.services.TopicService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -35,16 +32,16 @@ public class TopicController {
                 .ok(new ApiResponseDto<>("Topic retrieved successfully", topic.toDto()));
     }
 
-    @GetMapping
-    public ResponseEntity<ApiResponseDto<List<TopicDto>>> getAll() {
+    @GetMapping("/page/{number}")
+    public ResponseEntity<ApiResponseDto<PageDto<TopicDto>>> getPage(@PathVariable int number) {
 
-        List<Topic> topics = topicService.getAll();
+        Page<Topic> page = topicService.getPage(number);
 
         return ResponseEntity
                 .ok(
                         new ApiResponseDto<>(
                                 "Topics retrieved successfully",
-                                topics.stream().map(Topic::toDto).toList()
+                                new PageDto<>(page.stream().map(Topic::toDto).toList(), number, page.getTotalPages())
                         )
                 );
     }

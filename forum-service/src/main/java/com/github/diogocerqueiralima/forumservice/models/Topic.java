@@ -75,4 +75,7 @@ public class Topic {
         return createdAt;
     }
 
+    public Boolean isEdited() {
+        return edited;
+    }
 }

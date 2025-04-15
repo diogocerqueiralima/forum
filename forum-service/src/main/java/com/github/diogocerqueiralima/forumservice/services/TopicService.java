@@ -37,7 +37,7 @@ public class TopicService {
         content = content == null ? topic.getContent() : content;
 
         return topicRepository.save(
-                new Topic(topic.getId(), title, content, true, topic.getUserId())
+                new Topic(topic.getId(), title, content, true, topic.getCreatedAt(), topic.getUserId())
         );
     }
 

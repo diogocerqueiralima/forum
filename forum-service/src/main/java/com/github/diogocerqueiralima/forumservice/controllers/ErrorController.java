@@ -1,6 +1,7 @@
 package com.github.diogocerqueiralima.forumservice.controllers;
 
 import com.github.diogocerqueiralima.forumservice.dto.ApiResponseDto;
+import com.github.diogocerqueiralima.forumservice.exceptions.CommentNotFoundException;
 import com.github.diogocerqueiralima.forumservice.exceptions.InvalidPageException;
 import com.github.diogocerqueiralima.forumservice.exceptions.TopicNotFoundException;
 import com.github.diogocerqueiralima.forumservice.exceptions.TopicOwnerException;
@@ -24,7 +25,7 @@ public class ErrorController {
                 .body(new ApiResponseDto<>(message));
     }
 
-    @ExceptionHandler(TopicNotFoundException.class)
+    @ExceptionHandler({TopicNotFoundException.class, CommentNotFoundException.class})
     public ResponseEntity<ApiResponseDto<Void>> handleNotFound(Exception e) {
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)

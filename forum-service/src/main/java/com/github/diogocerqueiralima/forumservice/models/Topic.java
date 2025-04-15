@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -27,20 +29,25 @@ public class Topic {
     @CreationTimestamp
     private Instant createdAt;
 
+    @OneToMany(mappedBy = "topic", fetch = FetchType.LAZY)
+    private List<Comment> comments;
+
     @Column(nullable = false)
     private UUID userId;
 
     public Topic() {}
 
     public Topic(String title, String content, UUID userId) {
-        this(null, title, content, false, userId);
+        this(null, title, content, false, Instant.now(), userId);
     }
 
-    public Topic(Long id, String title, String content, boolean edited, UUID userId) {
+    public Topic(Long id, String title, String content, boolean edited, Instant createdAt, UUID userId) {
+        this.comments = new ArrayList<>();
         this.id = id;
         this.title = title;
         this.content = content;
         this.edited = edited;
+        this.createdAt = createdAt;
         this.userId = userId;
     }
 
@@ -62,6 +69,10 @@ public class Topic {
 
     public UUID getUserId() {
         return userId;
+    }
+
+    public Instant getCreatedAt() {
+        return createdAt;
     }
 
 }

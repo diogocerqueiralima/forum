@@ -2,7 +2,6 @@ plugins {
     id("java")
     alias(libs.plugins.spring.boot)
     alias(libs.plugins.dependency.management)
-    kotlin("jvm")
 }
 
 group = "com.github.diogocerqueiralima"
@@ -20,12 +19,8 @@ dependencies {
     implementation(libs.spring.boot.validation)
     implementation(libs.postgresql)
     testImplementation(libs.spring.boot.test)
-    implementation(kotlin("stdlib-jdk8"))
 }
 
 tasks.test {
     useJUnitPlatform()
-}
-kotlin {
-    jvmToolchain(23)
 }

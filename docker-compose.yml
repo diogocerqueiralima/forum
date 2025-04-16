@@ -11,6 +11,12 @@ services:
       - network
     env_file:
       - .env
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USERNAME}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
   keycloak:
     container_name: keycloak
     image: quay.io/keycloak/keycloak:26.2.0
@@ -22,11 +28,19 @@ services:
       KC_BOOTSTRAP_ADMIN_PASSWORD: ${KC_BOOTSTRAP_ADMIN_PASSWORD}
     networks:
       - network
+  email-service:
+    container_name: email-service
+    image: docker.io/library/email-service:1.0.0
+    networks:
+      - network
+    env_file:
+      - .env
   forum-service:
     container_name: forum-service
     image: docker.io/library/forum-service:1.0.0
     depends_on:
       - postgres
+      - email-service
     networks:
       - network
     env_file:

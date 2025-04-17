@@ -16,3 +16,12 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: http://keycloak:8080/realms/forum_realm
+  rabbitmq:
+    host: ${RABBITMQ_HOST}
+    port: ${RABBITMQ_PORT}
+    username: ${RABBITMQ_USERNAME}
+    password: ${RABBITMQ_PASSWORD}
+
+broker:
+  exchange:
+    notification: ${BROKER_EXCHANGE_NOTIFICATION}

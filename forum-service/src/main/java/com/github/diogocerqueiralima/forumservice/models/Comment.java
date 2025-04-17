@@ -1,6 +1,7 @@
 package com.github.diogocerqueiralima.forumservice.models;
 
 import com.github.diogocerqueiralima.forumservice.dto.CommentDto;
+import com.github.diogocerqueiralima.forumservice.events.CreateCommentEvent;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -61,6 +62,13 @@ public class Comment {
                 this.createdAt,
                 this.topic.getId(),
                 this.parent == null ? null : this.parent.id
+        );
+    }
+
+    public CreateCommentEvent toCreateCommentEvent() {
+        return new CreateCommentEvent(
+                this.topic.getId(), this.topic.getTitle(), this.topic.getUserId(),
+                this.id, this.createdAt, this.content, this.userId
         );
     }
 

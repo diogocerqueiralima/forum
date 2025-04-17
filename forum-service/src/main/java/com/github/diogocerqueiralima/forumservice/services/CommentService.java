@@ -3,6 +3,7 @@ package com.github.diogocerqueiralima.forumservice.services;
 import com.github.diogocerqueiralima.forumservice.exceptions.CommentNotFoundException;
 import com.github.diogocerqueiralima.forumservice.models.Comment;
 import com.github.diogocerqueiralima.forumservice.models.Topic;
+import com.github.diogocerqueiralima.forumservice.producers.NotificationProducer;
 import com.github.diogocerqueiralima.forumservice.repositories.CommentRepository;
 import org.springframework.stereotype.Service;
 
@@ -13,10 +14,12 @@ public class CommentService {
 
     private final CommentRepository commentRepository;
     private final TopicService topicService;
+    private final NotificationProducer notificationProducer;
 
-    public CommentService(CommentRepository commentRepository, TopicService topicService) {
+    public CommentService(CommentRepository commentRepository, TopicService topicService, NotificationProducer notificationProducer) {
         this.commentRepository = commentRepository;
         this.topicService = topicService;
+        this.notificationProducer = notificationProducer;
     }
 
     public Comment getById(long id) {
@@ -27,8 +30,11 @@ public class CommentService {
 
         Comment parent = parentId == null ? null : getById(parentId);
         Topic topic = topicService.getById(topicId);
+        Comment comment = commentRepository.save(new Comment(content, userId, topic, parent));
 
-        return commentRepository.save(new Comment(content, userId, topic, parent));
+        notificationProducer.send(comment);
+
+        return comment;
     }
 
 }

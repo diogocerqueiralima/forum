@@ -11,3 +11,7 @@ spring:
     port: ${RABBITMQ_PORT}
     username: ${RABBITMQ_USERNAME}
     password: ${RABBITMQ_PASSWORD}
+
+broker:
+  exchange:
+    notification: ${BROKER_EXCHANGE_NOTIFICATION}

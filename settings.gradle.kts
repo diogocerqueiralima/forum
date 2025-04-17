@@ -9,4 +9,4 @@ plugins {
 rootProject.name = "forum"
 include("forum-service")
 include("gateway")
-include("email-service")
+include("notification-service")

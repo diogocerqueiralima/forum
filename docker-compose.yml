@@ -17,6 +17,10 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: ${RABBITMQ_USERNAME}
       RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
+    ports:
+      - "15672:15672"
+    networks:
+      - network
   keycloak:
     container_name: keycloak
     image: quay.io/keycloak/keycloak:26.2.0
@@ -28,9 +32,9 @@ services:
       KC_BOOTSTRAP_ADMIN_PASSWORD: ${KC_BOOTSTRAP_ADMIN_PASSWORD}
     networks:
       - network
-  email-service:
-    container_name: email-service
-    image: docker.io/library/email-service:1.0.0
+  notification-service:
+    container_name: notification-service
+    image: docker.io/library/notification-service:1.0.0
     networks:
       - network
     env_file:
@@ -40,7 +44,7 @@ services:
     image: docker.io/library/forum-service:1.0.0
     depends_on:
       - postgres
-      - email-service
+      - notification-service
     networks:
       - network
     env_file:

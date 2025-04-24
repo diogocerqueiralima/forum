@@ -15,6 +15,7 @@ dependencies {
     implementation(libs.spring.boot)
     implementation(libs.spring.boot.web)
     implementation(libs.spring.boot.mail)
+    implementation(libs.spring.boot.oauth2.client)
     implementation(libs.spring.amqp.rabbit)
     testImplementation(libs.spring.boot.test)
 }

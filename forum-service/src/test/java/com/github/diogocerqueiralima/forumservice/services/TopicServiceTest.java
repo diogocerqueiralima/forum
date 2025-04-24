@@ -4,7 +4,6 @@ import com.github.diogocerqueiralima.forumservice.exceptions.TopicNotFoundExcept
 import com.github.diogocerqueiralima.forumservice.exceptions.TopicOwnerException;
 import com.github.diogocerqueiralima.forumservice.models.Topic;
 import com.github.diogocerqueiralima.forumservice.repositories.TopicRepository;
-import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -16,6 +15,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 public class TopicServiceTest {

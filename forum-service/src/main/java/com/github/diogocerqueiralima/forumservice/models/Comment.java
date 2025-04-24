@@ -40,17 +40,42 @@ public class Comment {
 
     public Comment() {}
 
-    public Comment(String content, UUID userId, boolean edited, Topic topic, Comment parent) {
-        this.responses = new ArrayList<>();
+    public Comment(Long id, String content, UUID userId, Boolean edited, Topic topic, Comment parent) {
+        this.id = id;
         this.content = content;
         this.userId = userId;
         this.edited = edited;
         this.topic = topic;
         this.parent = parent;
+        this.responses = new ArrayList<>();
+    }
+
+    public Comment(String content, UUID userId, boolean edited, Topic topic, Comment parent) {
+        this(null, content, userId, edited, topic, parent);
     }
 
     public Comment(String content, UUID userId, Topic topic, Comment parent) {
         this(content, userId, false, topic, parent);
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public UUID getUserId() {
+        return userId;
+    }
+
+    public Topic getTopic() {
+        return topic;
+    }
+
+    public Comment getParent() {
+        return parent;
     }
 
     public CommentDto toDto() {

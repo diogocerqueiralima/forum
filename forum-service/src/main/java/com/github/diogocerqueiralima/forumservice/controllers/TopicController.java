@@ -75,7 +75,6 @@ public class TopicController {
     public ResponseEntity<ApiResponseDto<Void>> deleteById(@PathVariable long id, @AuthenticationPrincipal Jwt jwt) {
 
         UUID userId = UUID.fromString(jwt.getSubject());
-
         topicService.deleteById(id, userId);
 
         return ResponseEntity

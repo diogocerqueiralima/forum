@@ -1,10 +1,7 @@
 package com.github.diogocerqueiralima.forumservice.controllers;
 
 import com.github.diogocerqueiralima.forumservice.dto.ApiResponseDto;
-import com.github.diogocerqueiralima.forumservice.exceptions.CommentNotFoundException;
-import com.github.diogocerqueiralima.forumservice.exceptions.InvalidPageException;
-import com.github.diogocerqueiralima.forumservice.exceptions.TopicNotFoundException;
-import com.github.diogocerqueiralima.forumservice.exceptions.TopicOwnerException;
+import com.github.diogocerqueiralima.forumservice.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -38,7 +35,7 @@ public class ErrorController {
                 .body(new ApiResponseDto<>(e.getMessage()));
     }
 
-    @ExceptionHandler(TopicOwnerException.class)
+    @ExceptionHandler({TopicOwnerException.class, CommentOwnerException.class})
     public ResponseEntity<ApiResponseDto<Void>> handleForbidden(Exception e) {
         return ResponseEntity
                 .status(HttpStatus.FORBIDDEN)

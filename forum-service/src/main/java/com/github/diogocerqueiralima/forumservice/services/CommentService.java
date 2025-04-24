@@ -1,6 +1,7 @@
 package com.github.diogocerqueiralima.forumservice.services;
 
 import com.github.diogocerqueiralima.forumservice.exceptions.CommentNotFoundException;
+import com.github.diogocerqueiralima.forumservice.exceptions.CommentOwnerException;
 import com.github.diogocerqueiralima.forumservice.models.Comment;
 import com.github.diogocerqueiralima.forumservice.models.Topic;
 import com.github.diogocerqueiralima.forumservice.producers.NotificationProducer;
@@ -35,6 +36,31 @@ public class CommentService {
         notificationProducer.send(comment);
 
         return comment;
+    }
+
+    public Comment update(long id, String content, UUID userId) {
+
+        Comment comment = getById(id);
+
+        if (!comment.getUserId().equals(userId))
+            throw new CommentOwnerException();
+
+        return commentRepository.save(
+                new Comment(
+                        comment.getId(), content, comment.getUserId(),
+                        true, comment.getTopic(), comment.getParent()
+                )
+        );
+    }
+
+    public void deleteById(long id, UUID userId) {
+
+        Comment comment = getById(id);
+
+        if (!comment.getUserId().equals(userId))
+            throw new CommentOwnerException();
+
+        commentRepository.delete(comment);
     }
 
 }

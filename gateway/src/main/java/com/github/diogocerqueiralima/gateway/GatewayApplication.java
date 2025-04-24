@@ -18,7 +18,7 @@ public class GatewayApplication {
         return builder.routes()
                 .route("forum-service",
                         r -> r
-                                .path("/api/v1/topics/**", "/api/v1/comments/**")
+                                .path("/api/v1/topics/**", "/api/v1/comments/**", "/v3/api-docs/**", "/api/v1/forum/swagger-ui/**", "api/v1/forum/docs.html")
                                 .uri("http://forum-service:8080")
                 )
                 .build();

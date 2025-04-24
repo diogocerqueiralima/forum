@@ -27,9 +27,17 @@ services:
     command: ["start-dev"]
     ports:
       - "8080:8080"
+      - "9000:9000"
     environment:
       KC_BOOTSTRAP_ADMIN_USERNAME: ${KC_BOOTSTRAP_ADMIN_USERNAME}
       KC_BOOTSTRAP_ADMIN_PASSWORD: ${KC_BOOTSTRAP_ADMIN_PASSWORD}
+      KC_HEALTH_ENABLED: true
+    #healthcheck:
+    #  test: [ "CMD-SHELL", "curl --head http://localhost:9000/health" ]
+    #  interval: 10s
+    #  timeout: 30s
+    #  start_period: 30s
+    #  retries: 3
     networks:
       - network
   notification-service:
@@ -37,6 +45,9 @@ services:
     image: docker.io/library/notification-service:1.0.0
     networks:
       - network
+    #depends_on:
+    #  keycloak:
+    #    condition: service_healthy
     env_file:
       - .env
   forum-service:

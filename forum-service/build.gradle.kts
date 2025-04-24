@@ -18,6 +18,7 @@ dependencies {
     implementation(libs.spring.amqp.rabbit)
     implementation(libs.spring.boot.oauth2.resource.server)
     implementation(libs.spring.boot.validation)
+    implementation(libs.springdoc)
     implementation(libs.postgresql)
     testImplementation(libs.spring.boot.test)
 }

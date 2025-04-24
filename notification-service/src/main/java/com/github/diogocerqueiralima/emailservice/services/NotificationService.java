@@ -23,6 +23,9 @@ public class NotificationService {
         this.restClient = restClient;
     }
 
+    /*
+        refactor this to using a template engine like thymeleaf
+    */
     public void notifyTopicOwner(CreateCommentEvent event) {
 
         UserRepresentation topicOwner = restClient.get()

@@ -22,6 +22,11 @@ spring:
     username: ${RABBITMQ_USERNAME}
     password: ${RABBITMQ_PASSWORD}
 
+
 broker:
   exchange:
     notification: ${BROKER_EXCHANGE_NOTIFICATION}
+
+springdoc:
+  swagger-ui:
+    path: /api/v1/forum/docs.html

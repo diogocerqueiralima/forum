@@ -16,6 +16,7 @@ repositories {
 dependencies {
     implementation(libs.spring.boot.webflux)
     implementation(libs.spring.cloud.gateway)
+    implementation(libs.spring.boot.oauth2.client)
     testImplementation(libs.spring.boot.test)
 }
 

@@ -69,6 +69,8 @@ services:
       - forum-service
     networks:
       - network
+    env_file:
+      - .env
 
 networks:
   network:

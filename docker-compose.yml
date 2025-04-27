@@ -32,12 +32,10 @@ services:
       KC_BOOTSTRAP_ADMIN_USERNAME: ${KC_BOOTSTRAP_ADMIN_USERNAME}
       KC_BOOTSTRAP_ADMIN_PASSWORD: ${KC_BOOTSTRAP_ADMIN_PASSWORD}
       KC_HEALTH_ENABLED: true
-    #healthcheck:
-    #  test: [ "CMD-SHELL", "curl --head http://localhost:9000/health" ]
-    #  interval: 10s
-    #  timeout: 30s
-    #  start_period: 30s
-    #  retries: 3
+    healthcheck:
+      test: ["CMD-SHELL", "exec 3<>/dev/tcp/localhost/9000 && echo -e 'GET /health/ready HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n\r\n' >&3 && cat <&3 | grep -q '200 OK'"]
+      interval: 30s
+      timeout: 5s
     networks:
       - network
   notification-service:
@@ -45,17 +43,21 @@ services:
     image: docker.io/library/notification-service:1.0.0
     networks:
       - network
-    #depends_on:
-    #  keycloak:
-    #    condition: service_healthy
+    depends_on:
+      keycloak:
+        condition: service_healthy
     env_file:
       - .env
   forum-service:
     container_name: forum-service
     image: docker.io/library/forum-service:1.0.0
     depends_on:
-      - postgres
-      - notification-service
+      postgres:
+        condition: service_started
+      notification-service:
+        condition: service_started
+      keycloak:
+        condition: service_healthy
     networks:
       - network
     env_file:
